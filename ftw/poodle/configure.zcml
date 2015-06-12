@@ -61,7 +61,10 @@
         component=".vocabularies.AvailableUsersVocabularyFactory"
         name="ftw.poodle.users"
         />
-
+      <utility
+        component=".vocabularies.AvailableGroupsVocabularyFactory"
+        name="ftw.poodle.groups"
+        />
     <!-- register locales -->
      <i18n:registerTranslations directory="locales" />
 

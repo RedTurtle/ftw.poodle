@@ -4,6 +4,7 @@ from zope.annotation.interfaces import IAnnotations
 from interfaces import IPoodle, IPoodleVotes
 from persistent.mapping import PersistentMapping
 from persistent.list import PersistentList
+from plone import api
 
 
 def make_persistent(data):
@@ -70,15 +71,19 @@ class PoodleVotes(object):
         """uddate user informations
         """
         poodledata = self.getPoodleData()
-        users = self.context.getUsers()
+        users = set(self.context.getUsers())
         # create ids part if not available
         if 'ids' not in poodledata:
             poodledata['ids'] = {}
-        choices = poodledata['ids']
         # create a users part if not available
         if 'users' not in poodledata:
             poodledata['users'] = {}
-
+        #add also all users in selected groups
+        for group_id in self.context.getGroups():
+            if group_id:
+                members = [x.getId() for x in api.user.get_users(groupname=group_id)]
+                users.update(members)
+        choices = poodledata['ids']
         for user in users:
             if user not in poodledata['users'].keys():
                 # add user to data and fill dates with None

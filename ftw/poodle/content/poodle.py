@@ -1,13 +1,50 @@
+# -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
-from Products.ATContentTypes.content import base
-from Products.ATContentTypes.content import schemata
-from Products.Archetypes import atapi
-from Products.DataGridField import DataGridField, DataGridWidget
-from Products.DataGridField.Column import Column
 from ftw.poodle import poodleMessageFactory as _
 from ftw.poodle.config import PROJECTNAME
 from ftw.poodle.interfaces import IPoodle, IPoodleVotes
+from Products.Archetypes import atapi
+from Products.ATContentTypes.content import base
+from Products.ATContentTypes.content import schemata
+from Products.DataGridField import DataGridField, DataGridWidget
+from Products.DataGridField.Column import Column
+from Products.validation import validation
+from Products.validation.interfaces.IValidator import IValidator
 from zope.interface import implements
+import sys
+from zope.i18n import translate
+
+
+class PoodlePartecipantsFieldValidator:
+    """
+    Check if at least one field between users and groups if filled
+    """
+    #Plone < 4 compatibility
+    if sys.version_info[:2] >= (2, 6):
+        implements(IValidator)
+    else:
+        __implements__ = (IValidator,)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __call__(self, value, *args, **kwargs):
+        """
+        check if at least one user or group is set for this poodle.
+        """
+        instance = kwargs.get('instance', None)
+        if not instance:
+            return True
+        users = instance.REQUEST.form.get('users')
+        groups = instance.REQUEST.form.get('groups')
+        if (not users and not groups) or (users == [''] and groups == ['']):
+            return translate(
+                _("required_partecipants_label",
+                  u"You need to insert at least one group or user."),
+                context=instance.REQUEST)
+        return True
+
+validation.register(PoodlePartecipantsFieldValidator('isPartecipantSet'))
 
 
 PoodleSchema = schemata.ATContentTypeSchema.copy() + atapi.Schema((
@@ -19,9 +56,19 @@ PoodleSchema = schemata.ATContentTypeSchema.copy() + atapi.Schema((
             widget=atapi.InAndOutWidget(
                 label=_(u'ftwpoodle_label_users', default=u'Users'),
                 actb_expand_onfocus=1),
-            required=1,
+            required=0,
+            validators=('isPartecipantSet'),
             multiValued=1),
-
+        atapi.LinesField(
+            name='groups',
+            vocabulary_factory="ftw.poodle.groups",
+            enforceVocabulary=True,
+            widget=atapi.InAndOutWidget(
+                label=_(u'ftwpoodle_label_groups', default=u'Groups'),
+                actb_expand_onfocus=1),
+            required=0,
+            validators=('isPartecipantSet'),
+            multiValued=1),
         DataGridField(
             name='dates',
             allow_empty_rows=False,
@@ -91,13 +138,20 @@ class Poodle(base.ATCTContent):
 
     def updateSharing(self):
         """
-        Allow the selected Users to view the object
+        Allow the selected Users or Groups to view the object
         """
         users = self.getUsers()
         for user in users:
             wanted_roles = [u'Reader']
-            wanted_roles += list(self.get_local_roles_for_userid(user))
-            self.manage_setLocalRoles(user, wanted_roles)
+            local_roles = set(self.get_local_roles_for_userid(user))
+            local_roles.update(wanted_roles)
+            self.manage_setLocalRoles(user, local_roles)
+        groups = self.getGroups()
+        for group in groups:
+            wanted_roles = [u'Reader']
+            local_roles = set(self.get_local_roles_for_userid(group))
+            local_roles.update(wanted_roles)
+            self.manage_setLocalRoles(group, local_roles)
         self.reindexObjectSecurity()
         # XXX: remove users?
 

@@ -127,9 +127,9 @@ class PoodleTableView(BrowserView):
             (self.context, self.request),
             name=u'plone_portal_state')
         user = portal_state.member()
-
+        poodledata = self.context.getPoodleData()
         # added is_active check, to find out if poodle is active or not
-        return (user.id in self.context.getUsers()) and self.is_active()
+        return (user.id in poodledata['users'].keys()) and self.is_active()
 
     def is_active(self):
         """Checks the portal state if poodle is active

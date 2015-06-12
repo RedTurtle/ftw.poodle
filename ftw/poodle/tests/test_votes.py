@@ -132,15 +132,16 @@ class TestPoodleVotes(MockTestCase):
 
         poodle = self.providing_stub(
             [IAttributeAnnotatable, IPoodle])
-
         self.expect(poodle.getUsers()).result(
         ['hugo.boss', 'peter.muster', 'ms.busy'])
+
+        self.expect(poodle.getGroups()).result(
+        [''])
 
         self.replay()
 
         votes = IPoodleVotes(poodle)
         votes.setPoodleData(SAMPLE_DATA)
-
         votes.updateUsers()
 
         users = votes.getPoodleData().get('users')

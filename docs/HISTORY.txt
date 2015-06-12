@@ -1,10 +1,11 @@
 Changelog
 =========
 
-1.5.1 (unreleased)
+1.6.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add user groups support
+  [cekk]
 
 
 1.5.0 (2015-05-06)
