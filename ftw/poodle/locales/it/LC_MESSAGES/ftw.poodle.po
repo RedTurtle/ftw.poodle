@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-06 07:54+0000\n"
+"POT-Creation-Date: 2015-06-12 13:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Luca Fabbri <keul@redturtle.it>\n"
 "Language-Team: RedTurtle Technology <sviluppoplone@redturtle.it>\n"
@@ -12,82 +12,94 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
 
 msgid "A product to make polls to find out when to have a meeting"
 msgstr "Un prodotto per eseguire sondaggi sulle possibili date di un incontro"
 
-#: ./ftw/poodle/profiles/default/types/Poodle.xml
+#: ./profiles/default/types/Poodle.xml
 msgid "Meeting poll"
 msgstr "Sondaggio per incontro"
 
-#: ./ftw/poodle/browser/submit_data.py:30
+#: ./browser/submit_data.py:30
 msgid "You taked part to the poll"
 msgstr "Hai preso parte al sondaggio"
 
 #. Default: "Date"
-#: ./ftw/poodle/content/poodle.py:31
+#: ./content/poodle.py:77
 msgid "ftwpoodle_desc_date"
 msgstr "Data"
 
 #. Default: "Time / Duration"
-#: ./ftw/poodle/content/poodle.py:36
+#: ./content/poodle.py:82
 msgid "ftwpoodle_desc_duration"
 msgstr "Orario / Durata"
 
 #. Default: "Edit votes"
-#: ./ftw/poodle/browser/templates/voted.pt:6
+#: ./browser/templates/voted.pt:6
 msgid "ftwpoodle_edit_votes"
 msgstr "Modifica preferenze"
 
 #. Default: "Provide a date in a format like MM-DD-AAAA"
-#: ./ftw/poodle/content/poodle.py:33
+#: ./content/poodle.py:79
 msgid "ftwpoodle_help_date"
 msgstr "Fornisci una data in un formato quale GG-MM-AAAA"
 
 #. Default: "Dates"
-#: ./ftw/poodle/content/poodle.py:40
+#: ./content/poodle.py:86
 msgid "ftwpoodle_label_dates"
 msgstr "Date"
 
+#. Default: "Groups"
+#: ./content/poodle.py:67
+msgid "ftwpoodle_label_groups"
+msgstr "Gruppi"
+
 #. Default: "Users"
-#: ./ftw/poodle/content/poodle.py:20
+#: ./content/poodle.py:57
 msgid "ftwpoodle_label_users"
 msgstr "Utenti"
 
 #. Default: "The User ${username} has filled out your poodle"
-#: ./ftw/poodle/adapters.py:25
+#: ./adapters.py:25
 msgid "ftwpoodle_mail_subject"
 msgstr "L'utente ${username} ha conpilato il sondaggio"
 
 #. Default: "Results"
-#: ./ftw/poodle/browser/templates/poodletable.pt:50
+#: ./browser/templates/poodletable.pt:53
 msgid "ftwpoodle_results"
 msgstr "Risultati"
 
 #. Default: "The user {fullname} participated in the poll {title}"
-#: ./ftw/poodle/browser/submit_data.py:56
+#: ./browser/submit_data.py:56
 msgid "label_user_has_participated"
 msgstr "L'utente {fullname} ha partecipato al sondaggio {title}"
 
 #. Default: "no dates"
-#: ./ftw/poodle/browser/templates/poodle.pt:67
+#: ./browser/templates/poodle.pt:67
 msgid "no_dates_defined_text"
 msgstr "nessuna data"
 
 #. Default: "The user ${user_name} has entered his data into the meeting poll at ${document_url} on the website ${portal_title} at ${portal_url}"
-#: ./ftw/poodle/poodle_notification.pt:9
+#: ./poodle_notification.pt:9
 msgid "poodle_mailtemplate_body"
 msgstr "L'utente ${user_name} ha compilato il sondaggio all'indirizzo ${document_url} sul sito ${portal_title} all'indirizzo ${portal_url}"
 
+#. Default: "You need to insert at least one group or user."
+#: ./content/poodle.py:42
+msgid "required_partecipants_label"
+msgstr "Devi selezionare almeno un gruppo o un utente."
+
 #. Default: "Survey is deactivated"
-#: ./ftw/poodle/browser/poodle.py:23
+#: ./browser/poodle.py:23
 msgid "survey_deactivated"
 msgstr "Sondaggio disattivato"
 
 #. Default: "Your input has been succesfully saved."
-#: ./ftw/poodle/browser/templates/voted.pt:2
+#: ./browser/templates/voted.pt:2
 msgid "text_voted"
 msgstr "La tua preferenza è stata salvata"
-
 
